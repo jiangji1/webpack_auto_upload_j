@@ -1,7 +1,7 @@
 # webpack-auto-upload-j
 
-It is explained in detail on this website[www.jiangji1.com](www.jiangji1.com) <br/>
-在[www.jiangji1.com](www.jiangji1.com)中有详细讲解 <br/>
+It is explained in detail on this website[www.jiangji1.com](http://www.jiangji1.com) <br/>
+在[www.jiangji1.com](http://www.jiangji1.com)中有详细讲解 <br/>
  <br/>
 
 a webpack-plugin to auto upload your files <br/>
