@@ -60,4 +60,4 @@ result: succeedFiles and failedFiles
 ![2](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/2.png)
 
   <br/>
-[soundCode in, 源码](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j)的src
+[soundCode in src, 源码在src中](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j)
