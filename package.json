@@ -1,0 +1,28 @@
+{
+  "name": "webpack-auto-upload-j",
+  "version": "1.0.1",
+  "description": "webpack-auto-upload-j",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "d": "webpack --mode production",
+    "p": "npx babel src/ --out-dir lib --plugins=@babel/plugin-transform-runtime"
+  },
+  "author": "jiangji",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.7.4",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-stage-0": "^7.0.0",
+    "@babel/runtime": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "connect-multiparty": "^2.2.0",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "ssh2-sftp-client": "^4.2.4"
+  }
+}

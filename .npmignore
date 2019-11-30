@@ -1,4 +1,7 @@
+/imgs
 /node_modules
+/src
+.gitignore
 package-lock.json
 yarn-error.log
 yarn.lock
