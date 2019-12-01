@@ -12,6 +12,10 @@ if (in package.json has "up"(as Object)) {
 如果在package.json中，配置了up属性，并且是Object
 那么在up 有 kaiguan 属性，并且是true， 打包完会上传服务器
 否则打包完不会上传服务器
+如图
+
+![3](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/3.png)
+
 
 -------------------------------------------------------
 
