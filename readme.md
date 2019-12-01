@@ -1,5 +1,20 @@
 # webpack-auto-upload-j
 
+newest version `1.0.3`
+`change`
+if (in package.json has "up"(as Object)) {
+  if (up.kaiguan == true) {
+    files will upload
+  } else (up.kaiguan == false) {
+    files will not upload
+  }
+}
+如果在package.json中，配置了up属性，并且是Object
+那么在up 有 kaiguan 属性，并且是true， 打包完会上传服务器
+否则打包完不会上传服务器
+
+-------------------------------------------------------
+
 It is explained in detail on this website[www.jiangji1.com](http://www.jiangji1.com) <br/>
 在[www.jiangji1.com](http://www.jiangji1.com)中有详细讲解 <br/>
  <br/>

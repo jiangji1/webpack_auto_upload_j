@@ -1,6 +1,6 @@
 {
   "name": "webpack-auto-upload-j",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "webpack-auto-upload-j",
   "main": "src/index.js",
   "scripts": {

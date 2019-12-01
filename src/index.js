@@ -1,4 +1,5 @@
 var tool = require('./tool.js')
+var path = require('path')
 var fs = require('fs')
 var opt
 function Gouzi(options) {
@@ -19,6 +20,13 @@ function Gouzi(options) {
 Gouzi.prototype.apply = function(compiler) {
   compiler.plugin("done", function(params) {
     if (!opt) return
+    const pajp = path.resolve(compiler.context, 'package.json')
+    if (fs.existsSync(pajp)) {
+      const config = JSON.parse(fs.readFileSync(pajp))
+      if (Object.prototype.hasOwnProperty.call(config, 'up') && !config.up.kaiguan) {
+        return;
+      }
+    }
     if (Array.isArray(opt.entryDir)) {
       var arr = []
       opt.entryDir.forEach((v, i) => arr.push({
