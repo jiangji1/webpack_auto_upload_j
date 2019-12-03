@@ -1,61 +1,85 @@
 # webpack-auto-upload-j
 
-newest version `1.0.3`
+最新版本改动 `1.0.4`
 `change`
-if (in package.json has "up"(as Object)) {
-  if (up.kaiguan == true) {
-    files will upload
-  } else (up.kaiguan == false) {
-    files will not upload
-  }
+如果在package.json 有up，并且是一个Object，
+if (up.kaiguan === 0) {
+  文件打包完不会上传服务器
+} else (up.kaiguan === 1) {
+  文件打包完会上传服务器，服务器地址是build_upload_test配置的serviceDir
+} else (up.kaiguan === 2) {
+  文件打包完会上传服务器，服务器地址是build_upload_pro配置的serviceDir
 }
-如果在package.json中，配置了up属性，并且是Object
-那么在up 有 kaiguan 属性，并且是true， 打包完会上传服务器
-否则打包完不会上传服务器
-如图
 
-![3](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/3.png)
 
 
 -------------------------------------------------------
+在[www.jiangji1.com](http://www.jiangji1.com)中有思路拆分 <br/>
 
-It is explained in detail on this website[www.jiangji1.com](http://www.jiangji1.com) <br/>
-在[www.jiangji1.com](http://www.jiangji1.com)中有详细讲解 <br/>
- <br/>
-
-a webpack-plugin to auto upload your files <br/>
 一个自动上传文件的webpack插件 <br/>
 
-### install <br/>
 ### 安装 <br/>
 ```
 npm install webpack-auto-upload-j
 ```
 
-### how to use <br/>
 ### 使用 <br/>
-in webpack.config.js <br/>
-in plugins add one new WebpackAutoUploadJ(options) <br/>
 在你的webpack.config.js中的plugins加入一项new WebpackAutoUploadJ(配置参数) <br/>
 ![1](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/1.png) <br/>
-```
+### 在写路径的时候如果是 左斜杠`\`，记得转义，换成`\\`，如果是右斜杠，就不用管 <br/>
+`我是webpack的配置示列`
+``` javascript
 const WebpackAutoUploadJ = require('webpack-auto-upload-j')
 {
   plugins: [
-    new WebpackAutoUploadJ({
-      entryDir: 'static', // or ['static', 'static2', 'static3']
-      serviceDir: '/usr/share/web/static', // or ['/usr/share/web/static', '/usr/share/web/static2', '/usr/share/web/static3']
-      serviceConfig: {
-        "host": "xxx.xxx.xxx.xxx",
-        "port": xxx,
-        "user": "xxx",
-        "password": "xxx"
-      },
+    new WebpackAutouploadJ({
+      path: 'E:\\xxx\\xxx\\xxx\\abc.json', // 这里是一个你本地json文件的绝对路径，是你自己的配置,示列在下面
+      key: 'my-blog-web'
     }),
   ]
 }
 ```
-###property <br/>
+`我是本地json文件的配置示列`
+``` json
+{
+  "my-blog-web": {
+    "build_upload_test": {
+      "host": "xxx.xxx.xxx.xxx",
+      "port": 22,
+      "user": "root",
+      "password": "xxxxxxx",
+      "entryDir": "dabao",
+      "serviceDir": "/usr/xxx/xxx/dabao_test"
+    },
+    "build_upload_pro": {
+      "host": "xxx.xxx.xxx.xxx",
+      "port": 22,
+      "user": "root",
+      "password": "xxxxxxx",
+      "entryDir": "dabao",
+      "serviceDir": "/usr/xxx/xxx/dabao"
+    }
+  }
+}
+```
+`我是项目package.json文件的配置示列` <br/>
+
+``` json
+{
+  "up": {
+		"build": "y dc",
+		"build_upload_test": "y d",
+		"build_upload_pro": "y d",
+		"kaiguan": 2
+	}
+}
+```
+`kaiguan`
+  * 如果是0，不会上传服务器，
+  * 如果是1，上传的是上面本地json文件配置的build_upload_test中的serviceDir
+  * 如果是2，上传的是上面本地json文件配置的build_upload_pro中的serviceDir
+
+### property <br/>
 
 `entryDir`    String or Array  // relative path    相对路径 <br/>
 `serviceDir`  String or Array <br/>
@@ -64,22 +88,15 @@ const WebpackAutoUploadJ = require('webpack-auto-upload-j')
         * `port` your service Prot <br/>
 
 
-if (entryDir is Array) { // one-to-one  一对一的顺序 <br/>
-如果(entryDir 是 数组) <br/>
-  serviceDir must be Array <br/>
-  serviceDir 必须也是 数组 <br/>
-  entryDir['length'] can not less than serviceDir['length'] <br/>
-  entryDir的长度 不能 小于 serviceDir的长度 <br/>
-} <br/>
+如果entryDir 是 数组 <br/>
+  * serviceDir 必须也是 数组 <br/>
+  * entryDir的长度 不能 小于 serviceDir的长度 <br/>
 
-if (entryDir is String && serviceDir is Array) { <br/>
-如果(entryDir 是 字符串 并且 serviceDir 是 数组) <br/>
-  everyone of serviceDir will receive files in entryDir <br/>
-  entryDir 中的 文件 会传到 serviceDir 的 每个地址 <br/>
-} <br/>
+如果entryDir 是 字符串 并且 serviceDir 是 数组 <br/>
+  * entryDir 中的 文件 会传到 serviceDir 的 每个地址 <br/>
 
 
-result: succeedFiles and failedFiles
+上传服务器的结果，显示
 ![2](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/2.png)
 
   <br/>

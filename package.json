@@ -1,8 +1,8 @@
 {
   "name": "webpack-auto-upload-j",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "webpack-auto-upload-j",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "p": "npx babel src/ --out-dir lib --plugins=@babel/plugin-transform-runtime"

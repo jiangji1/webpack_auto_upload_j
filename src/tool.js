@@ -3,10 +3,10 @@ const path = require('path')
 const cc = require('ssh2-sftp-client')
 
 
-function readAll (dirPath) {
+function readAll (dirPath, currentPath) {
   
   dirPath = path.resolve(
-    __dirname.slice(0, __dirname.lastIndexOf('node_modules')),
+    currentPath,
     dirPath
   )
   const paths = [dirPath]
@@ -26,10 +26,11 @@ function readAll (dirPath) {
     })
   }
   const reg = new RegExp(dirPath.replace(/\\/g, '\\\\'), 'g')
+
   return res.map(v => v.replace(reg, '').replace(/\\/g, '/'))
 }
 
-async function uploadAll ({ serviceDir, allFiles, config, entryDir }) {
+async function uploadAll ({ serviceDir, allFiles, config, entryDir }, currentPath) {
   const successArr = []
   const failArr = []
   const c = new cc(config)
@@ -37,7 +38,7 @@ async function uploadAll ({ serviceDir, allFiles, config, entryDir }) {
   await c.connect(config)
   for (const i in allFiles) {
     const v = allFiles[i]
-    const localDir = path.resolve(__dirname.slice(0, __dirname.lastIndexOf('node_modules')), entryDir, v.slice(1))
+    const localDir = path.resolve(currentPath, entryDir, v.slice(1))
     const remoteDir = serviceDir + v
     try {
       const a = await c.exists(remoteDir.slice(0, remoteDir.lastIndexOf('/')))
@@ -73,15 +74,15 @@ ${failArr.map(v => `failed:  ${JSON.stringify(v, 0, '  ')} \n`)}
   `)
 }
 
-function readAndPut (item) {
-  var allFiles = readAll(item.entryDir)
+function readAndPut (item, currentPath) {
+  var allFiles = readAll(item.entryDir, currentPath)
   var obj = {
     entryDir: item.entryDir,
     serviceDir: item.serviceDir,
     allFiles,
     config: item.serviceConfig,
   }
-  uploadAll(obj)
+  uploadAll(obj, currentPath)
 }
 
 module.exports = readAndPut
