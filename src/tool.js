@@ -2,17 +2,17 @@ const fs = require('fs')
 const path = require('path')
 const cc = require('ssh2-sftp-client')
 
-
 function readAll (dirPath, currentPath) {
-  
   dirPath = path.resolve(
     currentPath,
     dirPath
   )
   const paths = [dirPath]
+  const aaa = []
   let res = []
   while (paths.length) {
     const head = paths.shift()
+    aaa.push(head)
     if (!fs.existsSync(head)) continue
     const f = fs.statSync(head)
     if (!f.isDirectory()) res.push(head)
@@ -26,7 +26,6 @@ function readAll (dirPath, currentPath) {
     })
   }
   const reg = new RegExp(dirPath.replace(/\\/g, '\\\\'), 'g')
-
   return res.map(v => v.replace(reg, '').replace(/\\/g, '/'))
 }
 
@@ -36,6 +35,7 @@ async function uploadAll ({ serviceDir, allFiles, config, entryDir }, currentPat
   const c = new cc(config)
   let a
   await c.connect(config)
+
   for (const i in allFiles) {
     const v = allFiles[i]
     const localDir = path.resolve(currentPath, entryDir, v.slice(1))
@@ -74,15 +74,49 @@ ${failArr.map(v => `failed:  ${JSON.stringify(v, 0, '  ')} \n`)}
   `)
 }
 
+async function delEvery ({ serviceDir, allFiles, config, entryDir }, uploadAfterDel) {
+  const c = new cc(config)
+  await c.connect(config)
+  for (const i in allFiles) {
+    const v = allFiles[i]
+    const remoteDir = serviceDir + v
+    try {
+      const a = await c.exists(remoteDir.slice(0, remoteDir.lastIndexOf('/')))
+      if (a) {
+        await c.delete(remoteDir)
+      }
+    } catch (e) {
+    }
+  }
+  c.end()
+  uploadAfterDel()
+}
+
+var delObj
+
+function readAndDelEvery (item, currentPath) {
+  const allDelFiles = readAll(item.entryDir, currentPath)
+
+  delObj = {
+    entryDir: item.entryDir,
+    serviceDir: item.serviceDir,
+    allFiles: allDelFiles,
+    config: item.serviceConfig,
+  }
+}
+
 function readAndPut (item, currentPath) {
-  var allFiles = readAll(item.entryDir, currentPath)
+  const allFiles = readAll(item.entryDir, currentPath)
   var obj = {
     entryDir: item.entryDir,
     serviceDir: item.serviceDir,
     allFiles,
     config: item.serviceConfig,
   }
-  uploadAll(obj, currentPath)
+  delEvery(delObj, () => uploadAll(obj, currentPath))
 }
 
-module.exports = readAndPut
+module.exports = {
+  readAndDelEvery,
+  readAndPut,
+}

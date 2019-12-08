@@ -1,19 +1,24 @@
 # webpack-auto-upload-j
 
-最新版本改动 `1.0.4`
-`change`
-如果在package.json 有up，并且是一个Object，
-if (up.kaiguan === 0) {
-  文件打包完不会上传服务器
-} else (up.kaiguan === 1) {
-  文件打包完会上传服务器，服务器地址是build_upload_test配置的serviceDir
-} else (up.kaiguan === 2) {
-  文件打包完会上传服务器，服务器地址是build_upload_pro配置的serviceDir
-}
+最新版本改动 `1.0.5` <br/>
+`change` <br/>
+会在打包前记录文件，在成功打完包后，删除之前打包文件，上传最新打包文件 <br/>
 
+------------------------------------------------------- <br/>
 
+最新版本改动 `1.0.4` <br/>
+`change` <br/>
+如果在package.json 有up，并且是一个Object， <br/>
+if (up.kaiguan === 0) { <br/>
+  文件打包完不会上传服务器 <br/>
+} else (up.kaiguan === 1) { <br/>
+  文件打包完会上传服务器，服务器地址是build_upload_test配置的serviceDir <br/>
+} else (up.kaiguan === 2) { <br/>
+  文件打包完会上传服务器，服务器地址是build_upload_pro配置的serviceDir <br/>
+} <br/>
 
--------------------------------------------------------
+------------------------------------------------------- <br/>
+
 在[www.jiangji1.com](http://www.jiangji1.com)中有思路拆分 <br/>
 
 一个自动上传文件的webpack插件 <br/>
@@ -25,7 +30,7 @@ npm install webpack-auto-upload-j
 
 ### 使用 <br/>
 在你的webpack.config.js中的plugins加入一项new WebpackAutoUploadJ(配置参数) <br/>
-![1](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/1.png) <br/>
+![1](http://www.jiangji1.com/static/upload_98f65583d993fd9dc23166d57b6b9204.jpg) <br/>
 ### 在写路径的时候如果是 左斜杠`\`，记得转义，换成`\\`，如果是右斜杠，就不用管 <br/>
 `我是webpack的配置示列`
 ``` javascript
@@ -97,7 +102,7 @@ const WebpackAutoUploadJ = require('webpack-auto-upload-j')
 
 
 上传服务器的结果，显示
-![2](https://raw.githubusercontent.com/jiangji1/webpack_auto_upload_j/master/imgs/2.png)
+![2](http://www.jiangji1.com/static/upload_6022e52eb274496f8c25ccdb2219b3d5.jpg)
 
   <br/>
 [soundCode in src, 源码在src中](https://github.com/jiangji1/webpack_auto_upload_j)
